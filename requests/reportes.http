@@ -31,12 +31,12 @@ Content-Type: application/json
 
 ### update reporte by id
 
-PUT {{api}}/2
+PUT {{api}}/1
 Content-Type: application/json
 
 {
     "nombreProducto": "PUT PRUEBA",
-    "prioridad": 4,
+    "prioridad": 3,
     "Descripcion": "primer reporte",
     "latitude": "123",
     "longitude": "321"

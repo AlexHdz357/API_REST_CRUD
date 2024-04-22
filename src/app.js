@@ -1,6 +1,6 @@
 import express from 'express';
 import config from './config';
-import reportesRoutes from './routes/reportes.routes';
+
 
 const app = express()
 
@@ -11,6 +11,6 @@ app.set('port', config.port)
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 
-app.use(reportesRoutes)
+import reportesRoutes from './routes/reportes.routes'
 
 export default app;
