@@ -113,7 +113,9 @@ export const updateReporteById = async (req, res) => {
     .input("latitude", sql.VarChar, latitude)
     .input("longitude", sql.VarChar, longitude)
     .input("IdReporte", sql.Int, IdReporte)
-    .query(queries.updateReporteById)
+    .query(queries.updateReporteById);
+
+    res.json({nombreProducto, prioridad, Descripcion, latitude, longitude});
 };
 
 

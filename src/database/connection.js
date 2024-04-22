@@ -1,10 +1,10 @@
 import sql from 'mssql'
-
+import config from '../config'
 const dbSettings = {
-    user: 'tofu123',
-    password: 'tempura123@',
-    server: 'localhost',
-    database: 'whirlpool',
+    user: config.dbUser,
+    password: config.dbPassword,
+    server: config.dbServer,
+    database: config.dbDatabase,
     options: {
         encrypt: true,
         trustServerCertificate: true

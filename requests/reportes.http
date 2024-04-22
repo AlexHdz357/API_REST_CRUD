@@ -28,6 +28,24 @@ Content-Type: application/json
     "longitude": "344.322.213"
 }
 
+
+### update reporte by id
+
+PUT {{api}}/2
+Content-Type: application/json
+
+{
+    "nombreProducto": "PUT PRUEBA",
+    "prioridad": 4,
+    "Descripcion": "primer reporte",
+    "latitude": "123",
+    "longitude": "321"
+}
+
+
+
+
+
 ### get reporte by id
 
 GET {{api}}/2
