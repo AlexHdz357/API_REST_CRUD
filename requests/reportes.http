@@ -1,0 +1,44 @@
+@api = http://localhost:3000/reportes
+
+
+### get all reportes
+GET {{api}}
+
+### getTotalReportes
+
+GET {{api}}/count
+
+
+### delete all reportes
+
+ DELETE {{api}}
+
+
+### create reporte
+
+
+POST {{api}}
+Content-Type: application/json
+
+{
+    "nombreProducto": "Reporte 7",
+    "prioridad": 1,
+    "Descripcion": "cuarto reporte",
+    "latitude": "123.321.212",
+    "longitude": "344.322.213"
+}
+
+### get reporte by id
+
+GET {{api}}/2
+
+### delete reporte by id
+
+
+ DELETE {{api}}/1
+
+
+
+### reiniciar id reportes
+
+POST {{api}}/reiniciarIdReportes
