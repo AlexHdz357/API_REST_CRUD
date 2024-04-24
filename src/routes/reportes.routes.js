@@ -1,6 +1,6 @@
 import {Router} from 'express';
 
-import {createNewReporte, deleteAllReportes, deleteReporte, getReporteById, getReportes, getTotalReportes, reiniciarIdReportes, reiniciarReportes, updateReporteById} from '../controllers/reportes.controller';
+import {createNewReporte, deleteAllReportes, deleteReporte, getReporteById, getReportes, getTotalReportes, reiniciarIdReportes, updateReporteById} from '../controllers/reportes.controller';
 
 const router = Router();
 

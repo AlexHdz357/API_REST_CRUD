@@ -115,4 +115,9 @@ h2{
     font-size: 20px;
 }
 
+.dummy img{
+    display: flex;
+    height: 400px;
+}
+
 

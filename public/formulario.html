@@ -105,7 +105,11 @@
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDmiaxdBO8le1EB7Tncm9yvqPmw5BrawYM&callback=initMap">
   </script>
   <h1>Formulario</h1>
-  <form id ="reportes">
+  <form id ="formulario">
+    <p>**Información del Empleado</p>
+    <label for="idEmpleado">ID del empleado:</label>
+    <br>
+    <input type="text" id="idEmpleado" name="idEmpleado" placeholder="Ingrese el ID del empleado" required>
     <p>**Información del Producto:**</p>
     <label for="nombreProducto">Nombre:</label>
     <br>
@@ -124,6 +128,14 @@
     <input type="hidden" id="latitude" name="latitude">
     <input type="hidden" id="longitude" name="longitude">
     <br>
+    <br>
+    <input id="imagen" type="file" onchange="encode();" required />
+        <div id="dummy" class="dummy"></div>
+        <p id="p1"></p>
+        <p id="p2"></p>
+        <p id="im64"></p>
+    <br>
+    <input type="hidden" id="imagenTexto" name="imagenTexto">
     <button type="reset">Limpiar campos</button>
     <button type="submit" id="enviar-formulario" disabled>Enviar información</button>
   </form>

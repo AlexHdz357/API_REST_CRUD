@@ -1,6 +1,5 @@
 @api = http://localhost:3000/reportes
 
-
 ### get all reportes
 GET {{api}}
 
@@ -21,25 +20,34 @@ POST {{api}}
 Content-Type: application/json
 
 {
+    "idEmpleado": 1,
     "nombreProducto": "Reporte 7",
     "prioridad": 1,
     "Descripcion": "cuarto reporte",
     "latitude": "123.321.212",
-    "longitude": "344.322.213"
+    "longitude": "344.322.213",
+    "estatus": 0,
+    "imagenTexto": "dinasdicnipsdn",
+    "completado": 0
+
 }
 
 
 ### update reporte by id
 
-PUT {{api}}/1
+PUT {{api}}/17
 Content-Type: application/json
 
 {
-    "nombreProducto": "PUT PRUEBA",
+    "idEmpleado": 1,
+    "nombreProducto": "hola fer",
     "prioridad": 3,
     "Descripcion": "primer reporte",
     "latitude": "123",
-    "longitude": "321"
+    "longitude": "321",
+    "estatus": 0,
+    "imagenTexto": "dinasdicnipsdn",
+    "completado": 0
 }
 
 

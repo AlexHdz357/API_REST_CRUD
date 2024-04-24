@@ -1,0 +1,18 @@
+@api2 = http://localhost:3000/empleados
+
+### get all empleados
+
+GET {{api2}}
+
+
+### create Empleado
+
+
+POST {{api2}}
+Content-Type: application/json
+
+{
+    "NombreCompleto": "Steve",
+    "Rol": "Promotor",
+    "Puntos": 0
+}
