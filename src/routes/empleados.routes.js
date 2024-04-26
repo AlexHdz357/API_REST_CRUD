@@ -1,11 +1,14 @@
 import {Router} from 'express';
 
-import {createNewEmpleado, getAllEmpleados} from '../controllers/empleados.controller';
+import {createNewEmpleado, getAllEmpleados, getEmpleadosReportesAprobados} from '../controllers/empleados.controller';
 
 const router = Router();
 
 router.get('/empleados', getAllEmpleados);
 
+router.get('/empleados/leaderboard', getEmpleadosReportesAprobados);
+
 router.post('/empleados', createNewEmpleado);
+
 
 export default router;

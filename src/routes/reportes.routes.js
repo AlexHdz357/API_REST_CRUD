@@ -1,6 +1,6 @@
 import {Router} from 'express';
 
-import {createNewReporte, deleteAllReportes, deleteReporte, getReporteById, getReportes, getTotalReportes, reiniciarIdReportes, updateReporteById} from '../controllers/reportes.controller';
+import {createNewReporte, deleteAllReportes, deleteReporte, getReporteById, getReportes, getTotalReportes, reiniciarIdReportes, updateReporteById, updateReporteField} from '../controllers/reportes.controller';
 
 const router = Router();
 
@@ -20,4 +20,5 @@ router.post('/reportes/reiniciarIdReportes', reiniciarIdReportes);
 
 router.put('/reportes/:IdReporte', updateReporteById);
 
+router.post('/reportes/:IdReporte/updateField', updateReporteField);
 export default router;

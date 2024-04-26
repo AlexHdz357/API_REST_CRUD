@@ -13,7 +13,8 @@ app.set('port', config.port)
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 app.use(cors({
-  origin: 'http://localhost:5000'
+  origin: 'http://localhost:5000',
+  methods: ['GET', 'POST', 'PUT', 'DELETE']
 }));
 app.use(reportesRoutes);
 app.use(empleadosRoutes);

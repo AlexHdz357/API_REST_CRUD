@@ -16,8 +16,8 @@ export const getReportes = async (req, res) => {
 };
 
 export const createNewReporte = async (req, res) => {
-    const {idReporte, idEmpleado, nombreProducto, prioridad, Descripcion, latitude, longitude, estatus, imagenTexto, completado} = req.body
-    if (idEmpleado == null || nombreProducto == null || prioridad == null || Descripcion == null || latitude == null || longitude == null || imagenTexto == null) {
+    const {idReporte, idEmpleado, nombreProducto, prioridad, Descripcion, latitude, longitude, aprobado, imagenTexto, completado} = req.body
+    if (idEmpleado == null || nombreProducto == null || prioridad == null || Descripcion == null || latitude == null || longitude == null) {
         return res.status(400).json({msg: 'Bad Request. Please Fill all fields'});
     }
     
@@ -30,12 +30,22 @@ export const createNewReporte = async (req, res) => {
         .input("Descripcion", sql.VarChar, Descripcion)
         .input("latitude", sql.VarChar, latitude)
         .input("longitude", sql.VarChar, longitude)
-        .input("estatus", sql.Bit, estatus || null)
+        .input("aprobado", sql.Int, aprobado)
         .input("imagenTexto", sql.VarChar, imagenTexto)
-        .input("completado", sql.Bit, completado || null)
+        .input("completado", sql.Int, completado)
         .query(queries.createNewReporte);
 
-        res.json({idEmpleado, nombreProducto, prioridad, Descripcion, latitude, longitude, estatus, imagenTexto, completado});
+        res.json({
+            idEmpleado,
+            nombreProducto,
+            prioridad,
+            Descripcion,
+            latitude,
+            longitude,
+            aprobado: aprobado,
+            imagenTexto,
+            completado: completado
+        });
     } catch (error) {
         res.status(500);
         res.send(error.message);
@@ -103,9 +113,9 @@ export const getTotalReportes = async (req, res) => {
 };
 
 export const updateReporteById = async (req, res) => {
-    const {idEmpleado, nombreProducto, prioridad, Descripcion, latitude, longitude, estatus, imagenTexto, completado} = req.body
+    const {idEmpleado, nombreProducto, prioridad, Descripcion, latitude, longitude, aprobado, imagenTexto, completado} = req.body
     const {IdReporte} = req.params;
-    if (idEmpleado == null || nombreProducto == null || prioridad == null || Descripcion == null || latitude == null || longitude == null || estatus == null || imagenTexto == null || completado == null || IdReporte == null) {
+    if (idEmpleado == null || nombreProducto == null || prioridad == null || Descripcion == null || latitude == null || longitude == null || aprobado == null || imagenTexto == null || completado == null || IdReporte == null) {
         return res.status(400).json({msg: 'Bad Request. Please Fill all fields'});
     }
 
@@ -118,11 +128,29 @@ export const updateReporteById = async (req, res) => {
     .input("latitude", sql.VarChar, latitude)
     .input("longitude", sql.VarChar, longitude)
     .input("IdReporte", sql.Int, IdReporte)
-    .input("estatus", sql.Bit, estatus)
+    .input("aprobado", sql.Int, aprobado)
     .input("imagenTexto", sql.VarChar, imagenTexto)
-    .input("completado", sql.Bit, completado)
+    .input("completado", sql.Int, completado)
     .query(queries.updateReporteById);
 
-    res.json({idEmpleado, nombreProducto, prioridad, Descripcion, latitude, longitude, estatus, imagenTexto, completado});
+    res.json({idEmpleado, nombreProducto, prioridad, Descripcion, latitude, longitude, aprobado, imagenTexto, completado});
 };
 
+
+export const updateReporteField = async function(req, res) {
+    const IdReporte = req.params.IdReporte;
+    const field = req.body.field;
+    const value = req.body.value;
+
+    const pool = await getConnection();
+    const result = await pool.request()
+        .input('IdReporte', sql.Int, IdReporte)
+        .input('value', sql.Int, value)
+        .query(queries.updateField.replace('${field}', field));
+
+    if (result.rowsAffected[0] > 0) {
+        res.status(200).send('Reporte updated successfully');
+    } else {
+        res.status(404).send('Reporte not found');
+    }
+};
