@@ -115,6 +115,10 @@ h2{
     font-size: 20px;
 }
 
+.btn-Tec{
+    background-color: #00a0dd;
+}
+
 .dummy img{
     display: flex;
     height: 400px;
