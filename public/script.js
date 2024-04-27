@@ -3,7 +3,7 @@ let formulario = document.getElementById('formulario');
 
 if (formulario) {
   async function gemini(img64){
-    const url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro-vision:const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro-vision:generateContent?key=${process.env.GOOGLE_API_KEY}`
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro-vision:generateContent?key=${process.env.GOOGLE_API_KEY}`
     const data = `{
       "contents":[
         {
