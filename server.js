@@ -13,7 +13,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Ruta para la página de inicio
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'PaginaInicio.html'));
+    res.sendFile(path.join(__dirname, 'public', 'InicioS.html'));
   });
 
 // Inicia el servidor en el puerto 5000
