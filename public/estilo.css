@@ -120,4 +120,7 @@ h2{
     height: 400px;
 }
 
-
+.mover-derecha {
+    margin-left: auto;
+    display: block;
+}

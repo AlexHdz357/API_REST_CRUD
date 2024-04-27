@@ -14,11 +14,11 @@ export const queries ={
     getAllEmpleados: 'SELECT * FROM Empleado',
     updateField: 'UPDATE Reporte SET ${field} = @value WHERE IdReporte = @IdReporte',
     getEmpleadosReportesAprobados: `
-        SELECT E.NombreCompleto, COUNT(R.idReporte) as Puntos
+        SELECT E.IdEmpleado, E.NombreCompleto, COUNT(R.idReporte) as Puntos
         FROM Empleado E
         LEFT JOIN Reporte R ON E.IdEmpleado = R.idEmpleado
         WHERE R.aprobado = 1
-        GROUP BY E.NombreCompleto
+        GROUP BY E.IdEmpleado, E.NombreCompleto
         ORDER BY Puntos DESC
     `
 };

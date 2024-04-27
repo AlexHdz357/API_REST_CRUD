@@ -1,33 +1,65 @@
 // Supongamos que estás intentando obtener un formulario con el ID 'mi-formulario'
 let formulario = document.getElementById('formulario');
 
-
-function encode() {
-
-  
-
-  var selectedfile = document.getElementById("imagen").files;
-  if (selectedfile.length > 0) {
-      var imageFile = selectedfile[0];
-      var fileReader = new FileReader();
-      fileReader.onload = function(fileLoadedEvent) {
-          var srcData = fileLoadedEvent.target.result;
-          var newImage = document.createElement('img');
-          newImage.src = srcData;
-          var img64=srcData;
-          document.getElementById("dummy").innerHTML = newImage.outerHTML;
-          document.getElementById("im64").innerHTML=img64.substring(23);
-          gemini(img64.substring(23));
-
-          // Guardar la imagen en texto en un campo oculto del formulario
-          document.getElementById('imagenTexto').value = img64.substring(23);
-      }
-      fileReader.readAsDataURL(imageFile);
-  }
-}
-
-
 if (formulario) {
+  async function gemini(img64){
+    const url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro-vision:generateContent?key=AIzaSyDS00vauZ81onTeqU_e6R9zVLl1Yx6mw9s'
+    const data = `{
+      "contents":[
+        {
+          "parts":[
+            {
+              "text": "What is this picture?"
+            },
+            {
+              "inline_data": {
+                "mime_type":"image/jpeg",
+                "data": "`+img64+`"
+              }
+            }
+          ]
+        }
+      ]
+    }`;
+
+    
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: data,
+    });
+    
+    const text = await response.text();
+    const resp = JSON.parse(text);
+    document.getElementById("p1").innerHTML = resp.candidates[0].content.parts[0].text;
+    const img = document.getElementById("im64").textContent;
+    console.log(img);
+  
+  }
+  function encode() {
+
+    var selectedfile = document.getElementById("imagen").files;
+    if (selectedfile.length > 0) {
+        var imageFile = selectedfile[0];
+        var fileReader = new FileReader();
+        fileReader.onload = function(fileLoadedEvent) {
+            var srcData = fileLoadedEvent.target.result;
+            var newImage = document.createElement('img');
+            newImage.src = srcData;
+            var img64=srcData;
+            document.getElementById("dummy").innerHTML = newImage.outerHTML;
+            document.getElementById("im64").innerHTML=img64.substring(23);
+            gemini(img64.substring(23));
+  
+            // Guardar la imagen en texto en un campo oculto del formulario
+            document.getElementById('imagenTexto').value = img64.substring(23);
+        }
+        fileReader.readAsDataURL(imageFile);
+    }
+  }
+  
   formulario.addEventListener('change', function() {
     var image = document.getElementById('imagen');
     var submitButton = document.getElementById('enviar-formulario');
@@ -87,7 +119,7 @@ if (window.location.pathname === '/reportes.html') {
       // Crear los títulos de las columnas
       let thead = document.createElement('thead');
       let headerRow = document.createElement('tr');
-      ['Id del reporte', 'Id del Empleado', 'Nombre Producto', 'Prioridad', 'Descripción', 'Latitud', 'Longitud', 'Aprobado', 'imagenTexto', 'completado'].forEach(text => {
+      ['Id del reporte', 'Id del Empleado', 'Nombre Producto', 'Prioridad', 'Descripción', 'Latitud', 'Longitud', 'Aprobado', 'completado'].forEach(text => {
       let th = document.createElement('th');
       th.textContent = text;
       headerRow.appendChild(th);
@@ -104,7 +136,7 @@ if (window.location.pathname === '/reportes.html') {
           if (reporte.Descripcion.length > 20) {
               descripcionCorta += '...';
           }
-          [reporte.idReporte, reporte.idEmpleado, reporte.nombreProducto, reporte.prioridad, descripcionCorta, reporte.latitude, reporte.longitude, reporte.aprobado, reporte.imagenTexto, reporte.completado].forEach(text => {
+          [reporte.idReporte, reporte.idEmpleado, reporte.nombreProducto, reporte.prioridad, descripcionCorta, reporte.latitude, reporte.longitude, reporte.aprobado, reporte.completado].forEach(text => {
               let td = document.createElement('td');
               td.textContent = text;
               row.appendChild(td);
@@ -160,8 +192,24 @@ if (idReporte) {
       document.getElementById('latitude').textContent = reporte.latitude;
       document.getElementById('longitude').textContent = reporte.longitude;
       document.getElementById('aprobado').textContent = reporte.aprobado;
-      document.getElementById('imagenTexto').textContent = reporte.imagenTexto;
       document.getElementById('completado').textContent = reporte.completado;
+
+
+            // Decodificar y mostrar la imagen
+      const base64Text = reporte.imagenTexto;
+      const base64Content = base64Text.split(";base64,").pop();
+      const imageData = atob(base64Content);
+      const arrayBuffer = new Uint8Array(imageData.length);
+      for (let i = 0; i < imageData.length; i++) {
+        arrayBuffer[i] = imageData.charCodeAt(i);
+      }
+      const blob = new Blob([arrayBuffer], { type: 'image/jpeg' });
+      const imageUrl = URL.createObjectURL(blob);
+      const imgElement = document.createElement('img');
+      imgElement.src = imageUrl;
+      imgElement.style.width = '60%'; // Ajusta el ancho de la imagen a 50% del contenedor
+      imgElement.style.height = '60%'; // Ajusta la altura de la imagen a 2rem
+      document.getElementById('imagenTexto').appendChild(imgElement);
 
       // Agregar eventos de clic a los botones
       document.getElementById('toggleAprobado').addEventListener('click', function() {
